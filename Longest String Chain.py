@@ -13,15 +13,6 @@ class Solution :
             max_chain = max(max_chain, self.findLongestChain(word, word_set))
         return max_chain
     
-    def isPredecessor(self, a: str, b: str) -> bool:
-            valid = 0
-            for i in a:
-                check = b.find(i, valid)
-                if valid > check:
-                    return False
-                valid = check + 1
-            return True
-    
     def findLongestChain(self, word: str, word_set: set) -> int:
             max_chain = 1
             for i in range(len(word)):
