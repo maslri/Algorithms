@@ -7,38 +7,39 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        rows = [set() for _ in range(9)]
-        cols = [set() for _ in range(9)]
-        boxes = [set() for _ in range(9)]
-        empty = []
+        rows: List = [set() for _ in range(9)]
+        cols: List = [set() for _ in range(9)]
+        boxes: List = [set() for _ in range(9)]
+        empty: List = []
         for i in range(9):
             for j in range(9):
-                val = board[i][j]
+                val: str = board[i][j]
                 if val == ".":
                     empty.append((i, j))
                 else:
                     rows[i].add(val)
                     cols[j].add(val)
-                    boxes[(i//3)*3 + j//3].add(val)
+                    boxes[(i // 3) * 3 + j // 3].add(val)
 
         def backtrack(idx=0):
             if idx == len(empty):
                 return True
             i, j = empty[idx]
-            b = (i//3)*3 + j//3
+            b = (i // 3) * 3 + j // 3
             for num in map(str, range(1, 10)):
                 if num not in rows[i] and num not in cols[j] and num not in boxes[b]:
                     board[i][j] = num
                     rows[i].add(num)
                     cols[j].add(num)
                     boxes[b].add(num)
-                    if backtrack(idx+1):
+                    if backtrack(idx + 1):
                         return True
                     board[i][j] = "."
                     rows[i].remove(num)
                     cols[j].remove(num)
                     boxes[b].remove(num)
             return False
+
         backtrack()
 
     def find_empty(self, board: List[List[str]]) -> tuple | None:
@@ -61,7 +62,7 @@ class Solution:
                 block = []
                 for i in range(3):
                     for j in range(3):
-                        val = board[3*box_row+i][3*box_col+j]
+                        val = board[3 * box_row + i][3 * box_col + j]
                         if val != ".":
                             block.append(val)
                 if len(set(block)) != len(block):
